@@ -14,6 +14,7 @@ func main() {
 	// Когда прилетит GET /health — выполнится функция healthHandler.
 	mux.HandleFunc("/health", healthHandler) // функция healthHandler — обработчик ручки /health.
 	mux.HandleFunc("/hello", helloHandler)
+	mux.HandleFunc("/version", versionHandler)
 
 	// 3) Задаём адрес, на котором будет слушать сервер.
 	// ":8080" означает "на всех интерфейсах, порт 8080".
