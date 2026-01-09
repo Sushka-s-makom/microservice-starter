@@ -28,3 +28,27 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 		"status": "ok",
 	})
 }
+
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	// 1) Разрешаем только GET — так аккуратнее.
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	// 2) Читаем query параметр name.
+	// Пример: /hello?name=alex
+	name := r.URL.Query().Get("name")
+
+	// 3) Если name не передали — используем значение по умолчанию.
+	if name == "" {
+		name = "world"
+	}
+
+	// 4) Формируем JSON-ответ.
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	_ = json.NewEncoder(w).Encode(map[string]string{
+		"message": "hello, " + name,
+	})
+
+}
